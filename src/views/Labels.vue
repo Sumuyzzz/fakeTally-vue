@@ -1,7 +1,7 @@
 <template>
-    <div>
-<Nav/>
-    </div>
+           <Layout>
+               <p> labels</p> 
+               </Layout>  
 </template>
 
 <script lang="ts">
@@ -12,6 +12,3 @@
 }
 </script>
 
-<style scoped>
-
-</style>
