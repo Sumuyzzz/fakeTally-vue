@@ -18,7 +18,7 @@ const routes = [
     component:Money
   },
   {
-    path: "/labels",
+    path: "/label",
     component:Labels
   },
   {
