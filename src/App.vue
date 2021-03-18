@@ -19,19 +19,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  
 }
 
 #nav {
   padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: inherit;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+a {
+text-decoration: none;
+color:inherit;
   }
 }
 </style>
