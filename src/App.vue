@@ -10,9 +10,8 @@
 body {
   font-family: $font-hei;
   line-height: 1.5;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 }
 </style>
