@@ -20,7 +20,6 @@ export default {
 
 <style lang="scss">
 .layout-content {
-  border: 1px solid red;
   display: flex;
   flex-direction: column-reverse;
 }
@@ -128,7 +127,7 @@ export default {
 }
 .tags {
   display: flex;
-  border: solid 1px green;
+
   flex-grow: 1;
   font-size: 14px;
   padding: 16px;

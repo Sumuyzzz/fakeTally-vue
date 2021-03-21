@@ -24,7 +24,6 @@ export default {
 <style lang="scss" scoped>
 .tags {
   display: flex;
-  border: solid 1px green;
   flex-grow: 1;
   font-size: 14px;
   padding: 16px;
