@@ -7,17 +7,17 @@
   </Layout>
 </template>
 
-<script >
-import Types from "@/components/Types.vue";
-import Notes from "@/components/Notes.vue";
-import Tags from "@/components/Tags.vue";
-import NumberPad from "@/components/NumberPad.vue";
+<script>
+import Types from "@/components/Money/Types.vue";
+import Notes from "@/components/Money/Notes.vue";
+import Tags from "@/components/Money/Tags.vue";
+import NumberPad from "@/components/Money/NumberPad.vue";
+
 export default {
-  name: "Money",
   components: { Types, Notes, Tags, NumberPad },
   data() {
     return {
-      tags: ["衣", "食", "住", "行"],
+      tags: ["衣", "食", "住", "行", "cao"],
     };
   },
 };
