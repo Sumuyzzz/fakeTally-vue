@@ -1,26 +1,45 @@
 <template>
   <Layout class-prefix="layout">
-    <NumberPad />
-    <Types />
-    <Notes />
-    <Tags :data-source="tags" />
+    {{ record }}
+    <NumberPad :value.sync="record.amount" @update:value="onUpdateAmount" />
+    <Types :value.sync="record.type" @update:value="onUpdateTypes" />
+    <Notes @update:value="onUpdateNotes" />
+    <Tags :data-source.sync="tags" @update:value="onUpdateTags" />
   </Layout>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import Types from "@/components/Money/Types.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
+import { Component } from "vue-property-decorator";
 
-export default {
-  components: { Types, Notes, Tags, NumberPad },
-  data() {
-    return {
-      tags: ["衣", "食", "住", "行", "cao"],
-    };
-  },
+type Record = {
+  tags: string[];
+  notes: string;
+  type: string;
+  amount: number;
 };
+
+@Component({ components: { Types, Notes, Tags, NumberPad } })
+export default class Money extends Vue {
+  tags = ["衣", "食", "住", "行"];
+  record: Record = { tags: [], notes: "", type: "-", amount: 0 };
+  onUpdateTags(value: string[]) {
+    this.record.tags = value;
+  }
+  onUpdateNotes(value: string) {
+    this.record.notes = value;
+  }
+  onUpdateTypes(value: string) {
+    this.record.type = value;
+  }
+  onUpdateAmount(value: string) {
+    this.record.amount = parseFloat(value);
+  }
+}
 </script>
 
 <style lang="scss">
