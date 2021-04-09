@@ -14,7 +14,7 @@ import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component, Watch } from "vue-property-decorator";
-import model from "src/model";
+import model from "@/model";
 
 //获取数据信息
 const recordList = model.fetch();

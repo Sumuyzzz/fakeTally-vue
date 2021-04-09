@@ -11,4 +11,4 @@ const model = {
     }
 }
 
-export  default  model
+export  default model
