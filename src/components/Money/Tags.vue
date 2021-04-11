@@ -57,7 +57,7 @@ export default class Tags extends Vue {
     display: flex;
     flex-wrap: wrap;
     > li {
-      background: #d9d9d9;
+      background: white;
       $h: 24px;
       height: $h;
       line-height: $h;
@@ -74,7 +74,7 @@ export default class Tags extends Vue {
     button {
       background: transparent;
       border: none;
-      color: #999;
+      color: rgb(251, 0, 0);
       border-bottom: 1px solid;
       padding: 0 4px;
     }
