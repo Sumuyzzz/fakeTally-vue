@@ -19,7 +19,7 @@ const routes = [
     component:Money
   },
   {
-    path: "/label",
+    path: "/labels",
     component:Labels
   },
   {
@@ -27,7 +27,7 @@ const routes = [
     component:Statistics
   },
   {
-    path: "/label/edit",
+    path: "/labels/edit/:id",
     component:EditLabel
   },
 {
