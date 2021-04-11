@@ -11,8 +11,8 @@
         <Icon name="right" />
       </router-link>
     </div>
-    <div class="createTag-wrapper">
-      <Button class="createTag" @click="createTag">新建标签</Button>
+    <div class="button-wrapper">
+      <Button @click="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>
@@ -58,17 +58,11 @@ export default class Labels extends Vue {
     }
   }
 }
-.createTag {
-  background: rgb(109, 109, 109);
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  padding: 0 16px;
-  &-wrapper {
-    text-align: center;
-    padding: 16px;
-  }
-  //&继承&-wrapper等价于.createTag-wrapper
+
+.button-wrapper {
+  text-align: center;
+  padding: 16px;
+  margin-top: 44px;
 }
 </style>
 

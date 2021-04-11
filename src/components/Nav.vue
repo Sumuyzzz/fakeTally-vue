@@ -41,7 +41,7 @@ nav {
     }
   }
   > .item.selected {
-    color: rgb(37, 248, 185);
+    color: rgb(255, 255, 255);
   }
 }
 </style>

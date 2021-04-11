@@ -5,8 +5,16 @@
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
-    <Notes class="form-wrapper" fieldName="标签名" placeholder="请输入标签名" />
-    <Button>删除标签</Button>
+    <div class="tagsName">
+      <Notes
+        class="form-wrapper"
+        fieldName="标签名"
+        placeholder="请输入标签名"
+      />
+    </div>
+    <div class="button-wrapper">
+      <Button>删除标签</Button>
+    </div>
   </Layout>
 </template>
 
@@ -37,13 +45,16 @@ export default class EditLabel extends Vue {
 <style lang="scss" scoped>
 .navBar {
   text-align: center;
-  font-size: 16px;
+
   display: flex;
   background: white;
   align-items: center;
   justify-content: space-between;
+  height: 44px;
   > .title {
+    font-size: 16px;
   }
+
   > .leftIcon {
     width: 24px;
     height: 24px;
@@ -56,5 +67,10 @@ export default class EditLabel extends Vue {
 .form-wrapper {
   background: white;
   margin-top: 8px;
+}
+.button-wrapper {
+  text-align: center;
+  padding: 16px;
+  margin-top: 44px;
 }
 </style>

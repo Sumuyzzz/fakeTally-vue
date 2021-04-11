@@ -3,6 +3,7 @@
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
     <Types :value.sync="record.type" />
     <Notes
+      cla
       field-name="备注"
       placeholder="请输入备注"
       @update:value="onUpdateNotes"

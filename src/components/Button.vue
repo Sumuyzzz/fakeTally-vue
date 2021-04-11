@@ -14,15 +14,10 @@ export default class Button extends Vue {}
 
 <style lang="scss" scoped>
 .button {
-  background: rgb(109, 109, 109);
+  background: rgb(26, 25, 25);
   color: #fff;
   border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   padding: 0 16px;
-  &-wrapper {
-    text-align: center;
-    padding: 16px;
-  }
-  //&继承&-wrapper等价于.createTag-wrapper
 }
 </style>
