@@ -6,7 +6,7 @@
     <ul class="current">
       <li
         v-for="tag in dataSource"
-        :key="tag"
+        :key="tag.id"
         :class="{ selected: selectedTags.indexOf(tag) >= 0 }"
         @click="toggle(tag)"
       >
@@ -76,7 +76,7 @@ export default class Tags extends Vue {
       border: none;
       color: rgb(0, 0, 0);
       border-bottom: 1px solid;
-      padding: 0 4px;
+      padding: 10 4px;
     }
   }
 }
