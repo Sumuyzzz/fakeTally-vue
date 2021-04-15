@@ -2,11 +2,10 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
     <Types :value.sync="record.type" />
-    <Notes
-      cla
+    <FormItem
       field-name="备注"
       placeholder="请输入备注"
-      @update:value="onUpdateNotes"
+      @update:value="onUpdateNoes"
     />
     <Tags :data-source.sync="tags" @update:value="onUpdateTags" />
   </Layout>
@@ -15,18 +14,22 @@
 <script lang="ts">
 import Vue from "vue";
 import Types from "@/components/Money/Types.vue";
-import Notes from "@/components/Money/Notes.vue";
+import FormItem from "@/components/Money/FormItem.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component, Watch } from "vue-property-decorator";
+
+import tagListModel from "@/models/TagListModel";
 import recordListModel from "@/models/RecordList";
 
 //获取数据信息
 const recordList = recordListModel.fetch();
+const tagList = tagListModel.fetch();
 
-@Component({ components: { Types, Notes, Tags, NumberPad } })
+@Component({ components: { Types, FormItem, Tags, NumberPad } })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
+  tags = tagList;
+
   recordList: RecordItem[] = recordList;
   //初始化数据
   record: RecordItem = {
@@ -38,23 +41,15 @@ export default class Money extends Vue {
   onUpdateTags(value: string[]) {
     this.record.tags = value;
   }
-  onUpdateNotes(value: string) {
+  onUpdateNoes(value: string) {
     this.record.notes = value;
   }
-  onUpdateTypes(value: string) {
-    this.record.type = value;
-  }
-  onUpdateAmount(value: string) {
-    this.record.amount = parseFloat(value);
-  }
   saveRecord() {
-    const record2: RecordItem = recordListModel.clone(this.record);
-    record2.createdAt = new Date();
-    this.recordList.push(record2);
+    recordListModel.create(this.record);
   }
   @Watch("recordList")
   onRecordListChange() {
-    recordListModel.save(this.recordList);
+    recordListModel.save();
   }
 }
 </script>
@@ -149,7 +144,7 @@ export default class Money extends Vue {
     }
   }
 }
-.notes {
+.FormItem {
   font-size: 14px;
   background: #f5f5f5;
   display: flex;
