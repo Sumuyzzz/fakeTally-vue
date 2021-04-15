@@ -22,4 +22,5 @@ type RecordItem = {
   interface Window{
     tagList: tag[];
     createTag: (name: string) => void;
+    removeTag: (id: string) => boolean;
   }
