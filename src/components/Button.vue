@@ -19,5 +19,6 @@ export default class Button extends Vue {}
   border: none;
   border-radius: 10px;
   padding: 0 16px;
+  height: 30px;
 }
 </style>
