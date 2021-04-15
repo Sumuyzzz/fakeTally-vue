@@ -1,43 +1,63 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left" />
+      <Icon class="leftIcon" name="left" @click="goback" />
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
-    <div class="tagsName">
-      <Notes
-        class="form-wrapper"
+    <div class="form-wrapper">
+      <FormItem
+        :value="tag.name"
+        @update:value="updateTag"
         fieldName="标签名"
         placeholder="请输入标签名"
       />
     </div>
     <div class="button-wrapper">
-      <Button>删除标签</Button>
+      <Button @click="removeTag()">删除标签</Button>
     </div>
   </Layout>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import tagListModel from "@/models/TagList";
+import tagListModel from "@/models/TagListModel";
 import { Component } from "vue-property-decorator";
-import Notes from "@/components/Money/Notes.vue";
+import FormItem from "@/components/Money/FormItem.vue";
 import Button from "@/components/Button.vue";
-import Icon from "./Icon.vue";
 
-@Component({ components: { Notes, Icon, Button } })
+@Component({
+  components: { FormItem, Button },
+})
 export default class EditLabel extends Vue {
+  tag?: { id: string; name: string } = undefined;
   created() {
     const id = this.$route.params.id;
     tagListModel.fetch();
     const tags = tagListModel.data;
     const tag = tags.filter((t) => t.id === id)[0];
     if (tag) {
-      console.log(tag);
+      this.tag = tag;
     } else {
       this.$router.replace("/404");
     }
+  }
+  updateTag(name: string) {
+    if (this.tag) {
+      tagListModel.updated(this.tag.id, name);
+    }
+  }
+  removeTag() {
+    if (this.tag) {
+      if (tagListModel.remove(this.tag.id)) {
+        this.$router.back();
+      } else {
+        window.alert("删除失败");
+      }
+    }
+  }
+  goback() {
+    this.$router.back();
   }
 }
 </script>
@@ -45,7 +65,6 @@ export default class EditLabel extends Vue {
 <style lang="scss" scoped>
 .navBar {
   text-align: center;
-
   display: flex;
   background: white;
   align-items: center;
@@ -54,7 +73,6 @@ export default class EditLabel extends Vue {
   > .title {
     font-size: 16px;
   }
-
   > .leftIcon {
     width: 24px;
     height: 24px;
