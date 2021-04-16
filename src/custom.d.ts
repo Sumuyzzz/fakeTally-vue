@@ -4,7 +4,6 @@ type RecordItem = {
     type: string;
     amount: number;
     createdAt?: Date;
-   
   };
 
   type tag ={
@@ -20,7 +19,12 @@ type RecordItem = {
     remove: (id: string) => boolean;
 }
   interface Window{
+    store: { 
+    recordList: RecordItem[];
     tagList: tag[];
     createTag: (name: string) => void;
     removeTag: (id: string) => boolean;
+    updateTag: (id: string,name: string) => 'success'|'not found'|'duplicated';//也可以tagListModel['updated']
+    findTag: (id: string) => Tag;
+    createRecord: (record: RecordItem) => void; };
   }

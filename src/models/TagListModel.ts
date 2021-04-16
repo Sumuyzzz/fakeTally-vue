@@ -1,18 +1,7 @@
 import createId from '@/lib/idCreator';
 
 const localStorageKeyName = 'tagList'
-type tag ={
-    id: string;
-    name: string;
-}
-type tagListModel={
-    data: tag[];
-    fetch: () => tag[];
-    create: (name: string) => 'success'|'duplicated';
-    updated: (id: string,name: string) => 'success'|'not found'|'duplicated';
-    save: () => void; 
-    remove: (id: string) => boolean;
-}
+
 const tagListModel: tagListModel = {
     data: [],
     fetch() {
@@ -39,18 +28,18 @@ const tagListModel: tagListModel = {
                 tag.name = name;
                 this.save();
                 return 'success'
-        }
+              }
         }else{
             return 'not found'
         }
-    },
-remove(id: string){
-   let index = -1;
-   for(let i =0;i<this.data.length;i++){
-       if( this.data[i].id === id){
-       index = i;
-       break;
-       }
+     },
+    remove(id: string){
+         let index = -1;
+         for(let i =0;i<this.data.length;i++){
+           if( this.data[i].id === id){
+           index = i;
+          break;
+          }
    }
    this.data.splice(index, 1)//参数index为删除的起始点,删除个数为1
    this.save()
