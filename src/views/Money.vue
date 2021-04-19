@@ -7,7 +7,7 @@
       placeholder="请输入备注"
       @update:value="onUpdateNoes"
     />
-    <Tags :data-source="tags" @update:value="onUpdateTags" />
+    <Tags />
   </Layout>
 </template>
 
@@ -18,13 +18,17 @@ import FormItem from "@/components/Money/FormItem.vue";
 import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
 import { Component } from "vue-property-decorator";
-import store from "@/store/index2";
+import store from "@/store/dataStore";
+
+// import store from "@/store/index";
 
 //获取数据信息
 
-@Component({ components: { Types, FormItem, Tags, NumberPad } })
+@Component({
+  components: { Types, FormItem, Tags, NumberPad },
+})
 export default class Money extends Vue {
-  tags = store.tagList;
+  tags = store.fetchTags;
   recordList = store.recordList;
   //初始化数据
   record: RecordItem = {
@@ -52,7 +56,6 @@ export default class Money extends Vue {
 }
 </style>
 
-
 <style lang="scss" scoped>
 @import "~@/assets/styles/help.scss";
 .numberPad {
@@ -71,7 +74,6 @@ export default class Money extends Vue {
       height: 64px;
       background: transparent;
       border: none;
-
       &.ok {
         height: 64px * 2;
         float: right;
@@ -116,7 +118,6 @@ export default class Money extends Vue {
   font-size: 24px;
   text-align: center;
   background: #c4c4c4;
-
   > li {
     height: 64px;
     width: 50%;
@@ -154,7 +155,6 @@ export default class Money extends Vue {
 }
 .tags {
   display: flex;
-
   flex-grow: 1;
   font-size: 14px;
   padding: 16px;

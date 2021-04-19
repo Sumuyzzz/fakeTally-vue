@@ -21,18 +21,18 @@
 
 <script lang="ts">
 import Vue from "vue";
-import tagListModel from "@/models/TagListModel";
+
 import { Component } from "vue-property-decorator";
 import FormItem from "@/components/Money/FormItem.vue";
 import Button from "@/components/Button.vue";
-import store from "@/store/index2";
+import store from "@/store/dataStore";
+import tagStore from "@/store/tagStore";
 
 @Component({
   components: { FormItem, Button },
 })
 export default class EditLabel extends Vue {
   tag: tag = store.findTag(this.$route.params.id);
-
   created() {
     if (!this.tag) {
       this.$router.replace("/404");
@@ -40,12 +40,12 @@ export default class EditLabel extends Vue {
   }
   updateTag(name: string) {
     if (this.tag) {
-      tagListModel.updated(this.tag.id, name);
+      tagStore.updateTag(this.tag.id, name);
     }
   }
   removeTag() {
     if (this.tag) {
-      if (tagListModel.remove(this.tag.id)) {
+      if (tagStore.removeTag(this.tag.id)) {
         this.$router.back();
       } else {
         window.alert("删除失败");
