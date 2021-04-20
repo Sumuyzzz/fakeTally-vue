@@ -1,13 +1,5 @@
-import createId from '@/lib/idCreator';
-const localStorageKeyName = 'tagList'
-
 const tagStore = {
-    tagList: [] as tag[],
-
-    findTag(id: string) {
-        return this.tagList.filter(t => t.id === id)[0];
-    },
-
+    tagList: [] as Tag[],
     removeTag(id: string) {
         let index = -1;
         for (let i = 0;i < this.tagList.length;i++) {
@@ -17,7 +9,6 @@ const tagStore = {
             }
         }
         this.tagList.splice(index, 1);
-
         return true;
     },
     updateTag(id: string, name: string) {
@@ -36,7 +27,6 @@ const tagStore = {
             return 'not found';
         }
     },
-
 };
 
 // tagStore.fetchTags();

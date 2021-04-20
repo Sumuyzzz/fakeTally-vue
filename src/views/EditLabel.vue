@@ -7,7 +7,7 @@
     </div>
     <div class="form-wrapper">
       <FormItem
-        :value="tag.name"
+        :value="currentTag.name"
         @update:value="updateTag"
         fieldName="标签名"
         placeholder="请输入标签名"
@@ -21,37 +21,42 @@
 
 <script lang="ts">
 import Vue from "vue";
-
 import { Component } from "vue-property-decorator";
 import FormItem from "@/components/Money/FormItem.vue";
 import Button from "@/components/Button.vue";
 
 @Component({
   components: { FormItem, Button },
+  computed: {
+    tag() {
+      return this.$store.state.current;
+    },
+  },
 })
 export default class EditLabel extends Vue {
-  tag?: tag = undefined;
+  get currentTag() {
+    return this.$store.state.currentTag;
+  }
   created() {
-    //todo
-    // this.tag = store.findTag(this.$route.params.id);
-    if (!this.tag) {
+    const id = this.$route.params.id;
+    this.$store.commit("fetchTags");
+    this.$store.commit("setCurrentTag", id);
+    if (!this.currentTag) {
       this.$router.replace("/404");
     }
   }
-  updateTag() {
-    if (this.tag) {
-      //todo
-      // tagStore.updateTag(this.tag.id, name);
+  updateTag(name: string) {
+    if (this.currentTag) {
+      this.$store.commit("updateTag", {
+        id: this.currentTag.id,
+        name,
+      });
     }
   }
   removeTag() {
-    if (this.tag) {
-      // todo
-      // if (tagStore.removeTag(this.tag.id)) {
-      //   this.$router.back();
-      // } else {
-      //   window.alert("删除失败");
-      // }
+    if (this.currentTag) {
+      this.$store.commit("removeTag", this.currentTag.id);
+      window.alert("删除成功");
     }
   }
   goback() {
