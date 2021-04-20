@@ -8,7 +8,6 @@
       @update:value="onUpdateNoes"
     />
     <Tags />
-    <button @click="$store2.commit('increment', 1)">+1</button>
   </Layout>
 </template>
 

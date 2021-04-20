@@ -3,10 +3,7 @@ const localStorageKeyName = 'tagList'
 
 const tagStore = {
     tagList: [] as tag[],
-    fetchTags() {
-        this.tagList = JSON.parse(window.localStorage.getItem(localStorageKeyName) || 'tagList');
-        return this.tagList;
-    },
+
     findTag(id: string) {
         return this.tagList.filter(t => t.id === id)[0];
     },
@@ -20,7 +17,7 @@ const tagStore = {
             }
         }
         this.tagList.splice(index, 1);
-        this.saveTags();
+
         return true;
     },
     updateTag(id: string, name: string) {
@@ -32,18 +29,16 @@ const tagStore = {
             } else {
                 const tag = this.tagList.filter(item => item.id === id)[0];
                 tag.name = name;
-                this.saveTags();
+                // this.saveTags();
                 return 'success';
             }
         } else {
             return 'not found';
         }
     },
-    saveTags() {
-        window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.tagList));
-    }
+
 };
 
-tagStore.fetchTags();
+// tagStore.fetchTags();
 
 export default tagStore;
