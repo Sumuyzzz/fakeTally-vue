@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
-    <Types :value.sync="record.type" />
+    <Tabs :data-source="recordTypeList" :value.sync="record.type" />
     <FormItem
       field-name="备注"
       placeholder="请输入备注"
@@ -12,26 +12,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Types from "@/components/Money/Types.vue";
 import FormItem from "@/components/Money/FormItem.vue";
-import Tags from "@/components/Money/Tags.vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
+import Tags from "@/components/Money/Tags.vue";
+import Vue from "vue";
 import { Component } from "vue-property-decorator";
-
-// import store from "@/store/index";
-
-//获取数据信息
+import recordTypeList from "@/constants/recordTypeList";
+import Tabs from "@/components/Tabs.vue";
 
 @Component({
-  components: { Types, FormItem, Tags, NumberPad },
-  computed: {
-    recordList() {
-      return this.$store.state.recordList;
-    },
-  },
+  components: { FormItem, Tags, NumberPad, Tabs },
 })
 export default class Money extends Vue {
+  get recordList() {
+    return this.$store.state.recordList;
+  }
+
+  recordTypeList = recordTypeList;
+
   //初始化数据
   record: RecordItem = {
     tags: [],
@@ -115,29 +113,7 @@ export default class Money extends Vue {
     }
   }
 }
-.types {
-  display: flex;
-  font-size: 24px;
-  text-align: center;
-  background: #c4c4c4;
-  > li {
-    height: 64px;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    &.selected::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 4px;
-      width: 100%;
-      background: #333;
-    }
-  }
-}
+
 .FormItem {
   font-size: 14px;
   background: #f5f5f5;
@@ -172,16 +148,6 @@ export default class Money extends Vue {
       border-radius: $h/2;
       padding: 0 16px;
       margin-right: 12px;
-    }
-  }
-  .new {
-    padding-top: 16px;
-    button {
-      background: transparent;
-      border: none;
-      color: #999;
-      border-bottom: 1px solid;
-      padding: 0 4px;
     }
   }
 }

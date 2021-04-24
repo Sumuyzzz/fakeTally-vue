@@ -5,19 +5,19 @@ type RootState = {
 }
 
 type RecordItem = {
-  tags: string[];
+  tags: Tag[];
   notes: string;
   type: string;
   amount: number;
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 type Tag = {
   id: string;
   name: string;
 }
-type tagListModel = {
-  data: tag[];
+type TagListModel = {
+  data: Tag[];
   fetch: () => tag[];
   create: (name: string) => 'success' | 'duplicated';
   updated: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
