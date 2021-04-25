@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   } as RootState,
   mutations: {
     fetchRecords(state) {
-      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || 'recordList');
+      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]');
     },
     createRecord(state, record) {
       const record2: RecordItem = clone(record);
@@ -35,7 +35,7 @@ const store = new Vuex.Store({
     createTag(state, name: string) {
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
-        window.alert('标签名重复了');
+        return window.alert('标签名重复了');
       }
       const id = createId().toString();
       state.tagList.push({ id, name: name });
@@ -78,7 +78,6 @@ const store = new Vuex.Store({
     findTag(state, id: string) {
       return state.tagList.filter(t => t.id === id)[0];
     },
-
   },
   actions: {
   },
