@@ -1,5 +1,7 @@
 type RootState = {
   recordList: RecordItem[];
+  createRecordError: Error | null;
+  createTagError: Error | null;
   tagList: Tag[];
   currentTag?: Tag;
 }
@@ -23,15 +25,4 @@ type TagListModel = {
   updated: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
   save: () => void;
   remove: (id: string) => boolean;
-}
-interface Window {
-  store: {
-    recordList: RecordItem[];
-    tagList: tag[];
-    createTag: (name: string) => void;
-    removeTag: (id: string) => boolean;
-    updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';//也可以tagListModel['updated']
-    findTag: (id: string) => Tag;
-    createRecord: (record: RecordItem) => void;
-  };
 }
