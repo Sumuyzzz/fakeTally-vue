@@ -19,6 +19,7 @@
 				</ol>
 			</li>
 		</ol>
+		<div v-else class="noResult">目前没有相关记录</div>
 	</Layout>
 </template>
 <script lang="ts">
@@ -65,6 +66,9 @@
 				.sort(
 					(a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
 				);
+			if (newList.length === 0) {
+				return [];
+			}
 			type Result = { title: string; total?: number; items: RecordItem[] }[];
 			const result: Result = [
 				{
@@ -104,6 +108,10 @@
 </script>
 
 <style scoped lang="scss">
+	.noResult {
+		padding: 16px;
+		text-align: content;
+	}
 	::v-deep {
 		.type-tabs-item {
 			background: #c4c4c4;
