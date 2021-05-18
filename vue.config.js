@@ -16,7 +16,11 @@ module.exports = {
     config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'), [{ plainSprite: true }])
     config.module.rule('svg').exclude.add(dir)
 
-  }
+  },
+  publicPath: process.env.NODE_ENV === 'production'
+      ? '/money-vue2_website/'
+      : '/'
+
 }
 
 

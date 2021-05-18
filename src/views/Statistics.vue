@@ -1,5 +1,6 @@
 <template>
 	<Layout>
+    <Chart :options="x"></Chart>
 		<Tabs
 			class-prefix="type"
 			:data-source="recordTypeList"
@@ -20,6 +21,7 @@
 			</li>
 		</ol>
 		<div v-else class="noResult">目前没有相关记录</div>
+
 	</Layout>
 </template>
 <script lang="ts">
@@ -29,9 +31,16 @@
 	import recordTypeList from "@/constants/recordTypeList";
 	import dayjs from "dayjs";
 	import clone from "@/lib/clone";
+  import Chart from '@/components/Chart.vue';
+
+
+
+
+
+
 
 	@Component({
-		components: { Tabs },
+		components: { Tabs ,Chart},
 	})
 	export default class Statistics extends Vue {
 		tagString(tags: Tag[]) {
@@ -53,6 +62,32 @@
 				return day.format("YYYY年M月D日");
 			}
 		}
+    get x() {
+      return {
+        xAxis: {
+          type: 'category',
+          data: [
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+          ]
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [
+            820, 932, 901, 934, 1290, 1330, 1320,
+            820, 932, 901, 934, 1290, 1330, 1320,
+            820, 932, 901, 934, 1290, 1330, 1320,
+            820, 932, 901, 934, 1290, 1330, 1320, 1, 2
+          ],
+          type: 'line'
+        }],
+        tooltip: {show: true}
+      };
+    }
+
 
 		get recordList() {
 			return (this.$store.state as RootState).recordList;
@@ -88,6 +123,7 @@
 					});
 				}
 			}
+
 			result.map((group) => {
 				group.total = group.items.reduce((sum, item) => {
 					console.log(sum);
@@ -98,9 +134,7 @@
 			return result;
 		}
 
-		beforeCreate() {
-			this.$store.commit("fetchRecords");
-		}
+
 
 		type = "-";
 		recordTypeList = recordTypeList;
@@ -108,9 +142,13 @@
 </script>
 
 <style scoped lang="scss">
+.echarts {
+  max-width: 100%;
+  height: 400px;
+}
 	.noResult {
 		padding: 16px;
-		text-align: content;
+    align-content: center;
 	}
 	::v-deep {
 		.type-tabs-item {

@@ -7,11 +7,19 @@ import Icon from '@/components/Icon.vue'
 import Layout from '@/components/Layout.vue'
 import store from '@/store/index'
 
+
+
+
+
 Vue.prototype.$store = store;//全局使用$store2
 Vue.component('Nav', Nav)
 Vue.component('Icon', Icon)
 Vue.component('Layout', Layout)
 Vue.config.productionTip = false
+
+
+
+
 
 
 new Vue({
