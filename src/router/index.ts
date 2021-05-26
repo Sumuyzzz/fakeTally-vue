@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter from 'vue-router'
 
 import Labels from '@/views/Labels.vue'
 import Money from '@/views/Money.vue'
@@ -12,29 +12,29 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect:'/money'
+    redirect: '/money'
   },
   {
     path: "/money",
-    component:Money
+    component: Money
   },
   {
     path: "/labels",
-    component:Labels
+    component: Labels
   },
   {
     path: "/statistics",
-    component:Statistics
+    component: Statistics
   },
   {
     path: "/labels/edit/:id",
-    component:EditLabel
+    component: EditLabel
   },
-{
-  path: "*",
-  component:Notfound
-}
-  
+  {
+    path: "*",
+    component: Notfound
+  }
+
 ]
 
 const router = new VueRouter({

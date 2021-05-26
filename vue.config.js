@@ -18,8 +18,8 @@ module.exports = {
 
   },
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/money-vue2_website/'
-      : '/'
+    ? '/money-vue2_website/'
+    : '/'
 
 }
 
