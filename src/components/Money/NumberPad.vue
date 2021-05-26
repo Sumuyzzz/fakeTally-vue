@@ -2,20 +2,27 @@
 	<div class="numberPad">
 		<div class="output">{{ output }}</div>
 		<div class="buttons">
-			<button @click="inputContent">1</button>
-			<button @click="inputContent">2</button>
-			<button @click="inputContent">3</button>
-			<button @click="remove">删除</button>
-			<button @click="inputContent">4</button>
-			<button @click="inputContent">5</button>
-			<button @click="inputContent">6</button>
-			<button @click="clear">清空</button>
-			<button @click="inputContent">7</button>
-			<button @click="inputContent">8</button>
-			<button @click="inputContent">9</button>
-			<button @click="ok" class="ok">ok</button>
-			<button @click="inputContent" class="zero">0</button>
-			<button @click="inputContent">.</button>
+			<div class="input">
+				<button @click="inputContent" class="button">1</button>
+				<button @click="inputContent" class="button">2</button>
+				<button @click="inputContent" class="button">3</button>
+
+				<button @click="inputContent" class="button">4</button>
+				<button @click="inputContent" class="button">5</button>
+				<button @click="inputContent" class="button">6</button>
+
+				<button @click="inputContent" class="button">7</button>
+				<button @click="inputContent" class="button">8</button>
+				<button @click="inputContent" class="button">9</button>
+
+				<button @click="inputContent" class="zero">0</button>
+				<button @click="inputContent" class="point">.</button>
+			</div>
+			<div class="function">
+				<button @click="remove" class="remove">退格</button>
+				<button @click="clear" class="clear">清空</button>
+				<button @click="ok" class="ok">完成</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -27,7 +34,7 @@
 	export default class NumberPad extends Vue {
 		@Prop(Number) readonly value!: number;
 		output = this.value.toString();
-		//初始值
+
 		inputContent(event: MouseEvent): void {
 			const button = event.target as HTMLButtonElement;
 			const input = button.textContent as string;
@@ -79,48 +86,39 @@
 		}
 		.buttons {
 			@extend %clearFix;
-			> button {
-				float: left;
-				width: 25%;
-				height: 64px;
-				background: transparent;
-				border: none;
 
-				&.ok {
-					height: 64px * 2;
-					float: right;
+			background: #eeeeee;
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+
+			> .input {
+				height: 256px;
+				display: grid;
+				grid-template-rows: 1fr 1fr 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr;
+				grid-row: -1;
+				grid-row-gap: 1em;
+				grid-column-gap: 1em;
+				> button {
+					border-radius: 8px;
+					background: white;
+					border: none;
 				}
-				&.zero {
-					width: 25% * 2;
+				> .zero {
+					grid-column: 1/3;
 				}
-				$bg: #f2f2f2;
-				&:first-child {
-					background: $bg;
+			}
+			> .function {
+				display: grid;
+				grid-template-rows: 1fr 1fr 2fr;
+
+				> button {
+					background: white;
+					border-radius: 8px;
+					border: none;
 				}
-				&:nth-child(2),
-				&:nth-child(5) {
-					background: darken($bg, 4%);
-				}
-				&:nth-child(3),
-				&:nth-child(6),
-				&:nth-child(9) {
-					background: darken($bg, 4% * 2);
-				}
-				&:nth-child(4),
-				&:nth-child(7),
-				&:nth-child(10) {
-					background: darken($bg, 4% * 3);
-				}
-				&:nth-child(8),
-				&:nth-child(11),
-				&:nth-child(13) {
-					background: darken($bg, 4% * 4);
-				}
-				&:nth-child(14) {
-					background: darken($bg, 4% * 5);
-				}
-				&:nth-child(12) {
-					background: darken($bg, 4% * 6);
+				> .ok {
+					background: white;
 				}
 			}
 		}

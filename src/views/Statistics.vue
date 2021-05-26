@@ -1,6 +1,6 @@
 <template>
 	<Layout>
-    <Chart :options="x"></Chart>
+		<Chart :options="echartsType" class="echarts"></Chart>
 		<Tabs
 			class-prefix="type"
 			:data-source="recordTypeList"
@@ -21,7 +21,6 @@
 			</li>
 		</ol>
 		<div v-else class="noResult">目前没有相关记录</div>
-
 	</Layout>
 </template>
 <script lang="ts">
@@ -31,20 +30,18 @@
 	import recordTypeList from "@/constants/recordTypeList";
 	import dayjs from "dayjs";
 	import clone from "@/lib/clone";
-  import Chart from '@/components/Chart.vue';
-
-
-
-
-
-
+	import Chart from "@/components/Chart.vue";
 
 	@Component({
-		components: { Tabs ,Chart},
+		components: { Tabs, Chart },
 	})
 	export default class Statistics extends Vue {
 		tagString(tags: Tag[]) {
 			return tags.length === 0 ? "无" : tags.map((t) => t.name).join(",");
+		}
+
+		mounted() {
+			(this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 99999;
 		}
 
 		beautify(string: string) {
@@ -62,32 +59,68 @@
 				return day.format("YYYY年M月D日");
 			}
 		}
-    get x() {
-      return {
-        xAxis: {
-          type: 'category',
-          data: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ]
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320, 1, 2
-          ],
-          type: 'line'
-        }],
-        tooltip: {show: true}
-      };
-    }
-
+		get echartsType() {
+			return {
+				legend: {},
+				tooltip: {
+					trigger: "axis",
+					showContent: false,
+				},
+				dataset: {
+					source: [
+						["product", "2012", "2013", "2014", "2015", "2016", "2017"],
+						["Milk Tea", 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
+						["Matcha Latte", 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
+						["Cheese Cocoa", 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
+						["Walnut Brownie", 25.2, 37.1, 41.2, 18, 33.9, 49.1],
+					],
+				},
+				xAxis: { type: "category" },
+				yAxis: { gridIndex: 0 },
+				grid: { top: "55%" },
+				series: [
+					{
+						type: "line",
+						smooth: true,
+						seriesLayoutBy: "row",
+						emphasis: { focus: "series" },
+					},
+					{
+						type: "line",
+						smooth: true,
+						seriesLayoutBy: "row",
+						emphasis: { focus: "series" },
+					},
+					{
+						type: "line",
+						smooth: true,
+						seriesLayoutBy: "row",
+						emphasis: { focus: "series" },
+					},
+					{
+						type: "line",
+						smooth: true,
+						seriesLayoutBy: "row",
+						emphasis: { focus: "series" },
+					},
+					{
+						type: "pie",
+						id: "pie",
+						radius: "30%",
+						center: ["50%", "30%"],
+						emphasis: { focus: "data" },
+						label: {
+							formatter: "{b}: {@2012} ({d}%)",
+						},
+						encode: {
+							itemName: "product",
+							value: "2012",
+							tooltip: "2012",
+						},
+					},
+				],
+			};
+		}
 
 		get recordList() {
 			return (this.$store.state as RootState).recordList;
@@ -134,21 +167,19 @@
 			return result;
 		}
 
-
-
 		type = "-";
 		recordTypeList = recordTypeList;
 	}
 </script>
 
 <style scoped lang="scss">
-.echarts {
-  max-width: 100%;
-  height: 400px;
-}
+	.echarts {
+		max-width: 100%;
+		min-height: 100%;
+	}
 	.noResult {
 		padding: 16px;
-    align-content: center;
+		align-content: center;
 	}
 	::v-deep {
 		.type-tabs-item {
