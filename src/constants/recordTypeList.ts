@@ -1,5 +1,5 @@
 export default Object.freeze([
-    { text: "支出", value: "-" },
-    { text: "收入", value: "+" },
+    { name: "支出", value: "-" },
+    { name: "收入", value: "+" },
 ])
 

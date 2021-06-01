@@ -6,7 +6,7 @@
 		</router-link>
 
 		<router-link to="/money" class="item" active-class="selected">
-			<Icon name="bookkeeping" />
+			<Icon name="money" />
 			记账
 		</router-link>
 
@@ -35,13 +35,14 @@
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
+			color: #fff;
 			.icon {
-				width: 32px;
-				height: 32px;
+				width: 24px;
+				height: 24px;
 			}
 		}
 		> .item.selected {
-			color: #f6b52c;
+			color: #13c791;
 		}
 	}
 </style>

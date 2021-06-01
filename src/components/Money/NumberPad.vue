@@ -2,27 +2,24 @@
 	<div class="numberPad">
 		<div class="output">{{ output }}</div>
 		<div class="buttons">
-			<div class="input">
-				<button @click="inputContent" class="button">1</button>
-				<button @click="inputContent" class="button">2</button>
-				<button @click="inputContent" class="button">3</button>
+			<button @click="inputContent" class="button1">1</button>
+			<button @click="inputContent" class="button2">2</button>
+			<button @click="inputContent" class="button3">3</button>
 
-				<button @click="inputContent" class="button">4</button>
-				<button @click="inputContent" class="button">5</button>
-				<button @click="inputContent" class="button">6</button>
+			<button @click="inputContent" class="button4">4</button>
+			<button @click="inputContent" class="button5">5</button>
+			<button @click="inputContent" class="button6">6</button>
 
-				<button @click="inputContent" class="button">7</button>
-				<button @click="inputContent" class="button">8</button>
-				<button @click="inputContent" class="button">9</button>
+			<button @click="inputContent" class="button7">7</button>
+			<button @click="inputContent" class="button8">8</button>
+			<button @click="inputContent" class="button9">9</button>
 
-				<button @click="inputContent" class="zero">0</button>
-				<button @click="inputContent" class="point">.</button>
-			</div>
-			<div class="function">
-				<button @click="remove" class="remove">退格</button>
-				<button @click="clear" class="clear">清空</button>
-				<button @click="ok" class="ok">完成</button>
-			</div>
+			<button @click="inputContent" class="zero">0</button>
+			<button @click="inputContent" class="point">.</button>
+
+			<button @click="remove" class="remove">退格</button>
+			<button @click="clear" class="clear">清空</button>
+			<button @click="ok" class="ok">完成</button>
 		</div>
 	</div>
 </template>
@@ -38,12 +35,12 @@
 		inputContent(event: MouseEvent): void {
 			const button = event.target as HTMLButtonElement;
 			const input = button.textContent as string;
-			if (this.output.length === 16) {
+			if (this.output.length === 15) {
 				return;
 			}
-			if (this.output === "0") {
+			if (this.output === "$0") {
 				if ("123456789".indexOf(input) >= 0) {
-					this.output = input;
+					this.output = "$" + input;
 				} else {
 					this.output += input;
 				}
@@ -55,20 +52,20 @@
 			this.output += input;
 		}
 		remove() {
-			if (this.output.length === 1) {
-				this.output = "0";
+			if (this.output.length === 2) {
+				this.output = "$0";
 			} else {
 				this.output = this.output.slice(0, -1);
 			}
 		}
 		clear() {
-			this.output = "0";
+			this.output = "$0";
 		}
 		ok() {
 			const number = parseFloat(this.output);
 			this.$emit("update:value", number);
 			this.$emit("submit", number);
-			this.output = "0";
+			this.output = "$0";
 		}
 	}
 </script>
@@ -83,44 +80,63 @@
 			font-family: Consolas, monospace;
 			padding: 9px 16px;
 			text-align: right;
+			color: #fff;
 		}
 		.buttons {
-			@extend %clearFix;
-
-			background: #eeeeee;
+			background: #fff;
 			display: grid;
-			grid-template-columns: 2fr 1fr;
-
-			> .input {
-				height: 256px;
-				display: grid;
-				grid-template-rows: 1fr 1fr 1fr 1fr;
-				grid-template-columns: 1fr 1fr 1fr;
-				grid-row: -1;
-				grid-row-gap: 1em;
-				grid-column-gap: 1em;
-				> button {
-					border-radius: 8px;
-					background: white;
-					border: none;
-				}
-				> .zero {
-					grid-column: 1/3;
-				}
+			grid-template-columns: repeat(4, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+			grid-column-gap: 16px;
+			grid-row-gap: 16px;
+			> button {
+				background: #13c791;
+				border-radius: 200px;
+				color: #fff;
 			}
-			> .function {
-				display: grid;
-				grid-template-rows: 1fr 1fr 2fr;
+		}
 
-				> button {
-					background: white;
-					border-radius: 8px;
-					border: none;
-				}
-				> .ok {
-					background: white;
-				}
-			}
+		.button1 {
+			grid-area: 1 / 1 / 2 / 2;
+		}
+		.button2 {
+			grid-area: 1 / 2 / 2 / 3;
+		}
+		.button3 {
+			grid-area: 1 / 3 / 2 / 4;
+		}
+		.button4 {
+			grid-area: 2 / 1 / 3 / 2;
+		}
+		.button5 {
+			grid-area: 2 / 2 / 3 / 3;
+		}
+		.button6 {
+			grid-area: 2 / 3 / 3 / 4;
+		}
+		.button7 {
+			grid-area: 3 / 1 / 4 / 2;
+		}
+		.button8 {
+			grid-area: 3 / 2 / 4 / 3;
+		}
+		.button9 {
+			grid-area: 3 / 3 / 4 / 4;
+		}
+		.zero {
+			grid-area: 4 / 1 / 5 / 3;
+		}
+		.point {
+			grid-area: 4 / 3 / 5 / 4;
+		}
+		.remove {
+			grid-area: 1 / 4 / 2 / 5;
+		}
+		.clear {
+			grid-area: 2 / 4 / 3 / 5;
+		}
+		.ok {
+			grid-area: 3 / 4 / 5 / 5;
 		}
 	}
 </style>
