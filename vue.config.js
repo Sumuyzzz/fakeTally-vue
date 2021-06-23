@@ -12,17 +12,16 @@ module.exports = {
       .rule('svg-spirit')
       .test(/\.svg$/)
       .include.add(dir).end() //只包含icons目录
-      .use('svg-sprite-loader').loader('svg-sprite-loader').options({ extract: false }).end()
-    config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'), [{ plainSprite: true }])
+      .use('svg-sprite-loader').loader('svg-sprite-loader').options({
+        extract: false
+      }).end()
+    config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'), [{
+      plainSprite: true
+    }])
     config.module.rule('svg').exclude.add(dir)
 
   },
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/money-vue2_website/'
-    : '/'
+  publicPath: process.env.NODE_ENV === 'production' ?
+    '/money_manage/' : '/'
 
 }
-
-
-
-
