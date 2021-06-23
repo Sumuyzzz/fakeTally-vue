@@ -1,26 +1,26 @@
 <template>
 	<Layout>
-		<Chart :options="echartsType" class="echarts"></Chart>
-		<Tabs
-			class-prefix="type"
-			:data-source="recordTypeList"
-			:value.sync="type"
-		/>
-		<ol v-if="groupedList.length > 0">
-			<li v-for="(group, index) in groupedList" :key="index">
-				<h3 class="title">
-					{{ beautify(group.title) }} <span>￥{{ group.total }}</span>
+		<div class='chartWrapper' ref='chartWrapper'>
+			<Chart :options='echartsType' class='echarts' />
+		</div>
+
+		<Tabs class-prefix='type' :data-source='recordTypeList' :value.sync='type' />
+		<ol v-if='groupedList.length > 0'>
+			<li v-for='(group, index) in groupedList' :key='index'>
+				<h3 class='title'>
+					{{ beautify(group.title) }}
+					<span>￥{{ group.total }}</span>
 				</h3>
 				<ol>
-					<li v-for="item in group.items" :key="item.id" class="record">
+					<li v-for='item in group.items' :key='item.id' class='record'>
 						<span>{{ tagString(item.tags) }}</span>
-						<span class="notes">{{ item.notes }}</span>
-						<span>￥{{ item.amount }} </span>
+						<span class='notes'>{{ item.notes }}</span>
+						<span>￥{{ item.amount }}</span>
 					</li>
 				</ol>
 			</li>
 		</ol>
-		<div v-else class="noResult">目前没有相关记录</div>
+		<div v-else class='noResult'>目前没有相关记录{{groupedList.length}}</div>
 	</Layout>
 </template>
 <script lang="ts">
@@ -31,6 +31,8 @@
 	import dayjs from "dayjs";
 	import clone from "@/lib/clone";
 	import Chart from "@/components/Chart.vue";
+	import _ from "lodash";
+	import day from "dayjs";
 
 	@Component({
 		components: { Tabs, Chart },
@@ -41,7 +43,8 @@
 		}
 
 		mounted() {
-			(this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 99999;
+			const div = this.$refs.chartWrapper as HTMLDivElement;
+			div.scrollLeft = div.scrollWidth;
 		}
 
 		beautify(string: string) {
@@ -59,155 +62,89 @@
 				return day.format("YYYY年M月D日");
 			}
 		}
+
+		get keyValueList() {
+			const today = new Date();
+			const array = [];
+			console.log(this.groupedList);
+			for (let i = 0; i <= 29; i++) {
+				const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
+				const found = _.find(this.groupedList, {
+					title: dateString,
+				});
+				array.push({
+					key: dateString,
+					value: found ? found.total : 0,
+				});
+			}
+			array.sort((a, b) => {
+				if (a.key > b.key) {
+					return 1;
+				} else if (a.key === b.key) {
+					return 0;
+				} else {
+					return -1;
+				}
+			});
+			console.log("array");
+			console.log(array);
+			return array;
+		}
+
 		get echartsType() {
+			const keys = this.keyValueList.map((item) => item.key);
+			const values = this.keyValueList.map((item) => item.value);
+
 			return {
-				legend: {},
-				tooltip: {
-					trigger: "axis",
-					showContent: true,
+				grid: {
+					left: 0,
+					right: 0,
 				},
-				dataset: {
-					source: [
-						[
-							"product",
-							"2012",
-							"2013",
-							"2014",
-							"2015",
-							"2016",
-							"2017",
-							"2018",
-							"2019",
-							"2020",
-							"2021",
-							"2022",
-							"2023",
-						],
-						[
-							"Milk Tea",
-							56.5,
-							82.1,
-							88.7,
-							70.1,
-							53.4,
-							85.1,
-							56.5,
-							82.1,
-							88.7,
-							70.1,
-							53.4,
-							85.1,
-						],
-						[
-							"Matcha Latte",
-							51.1,
-							51.4,
-							55.1,
-							53.3,
-							73.8,
-							68.7,
-							56.5,
-							82.1,
-							88.7,
-							70.1,
-							53.4,
-							85.1,
-						],
-						[
-							"Cheese Cocoa",
-							40.1,
-							62.2,
-							69.5,
-							36.4,
-							45.2,
-							32.5,
-							56.5,
-							82.1,
-							88.7,
-							70.1,
-							53.4,
-							85.1,
-						],
-						[
-							"Walnut Brownie",
-							25.2,
-							37.1,
-							41.2,
-							18,
-							33.9,
-							49.1,
-							56.5,
-							82.1,
-							88.7,
-							70.1,
-							53.4,
-							85.1,
-						],
-					],
+				xAxis: {
+					type: "category",
+					data: keys,
+					axisTick: { alignWithLabel: true },
+					axisLine: { lineStyle: { color: "#666" } },
+					axisLabel: {
+						formatter: function (value: string, index: number) {
+							return value.substr(5);
+						},
+					},
 				},
-				xAxis: { type: "category" },
-				yAxis: { gridIndex: 0 },
-				grid: { top: "55%", containLabel: true },
-				dataZoom: {
-					start: 80,
-					type: "inside",
+				yAxis: {
+					type: "value",
+					show: false,
 				},
 				series: [
 					{
+						symbol: "circle",
+						symbolSize: 12,
+						itemStyle: { borderWidth: 1, color: "#666", borderColor: "#666" },
+						// lineStyle: {width: 10},
+						data: values,
 						type: "line",
-						smooth: true,
-						seriesLayoutBy: "row",
-						emphasis: { focus: "series" },
-					},
-					{
-						type: "line",
-						smooth: true,
-						seriesLayoutBy: "row",
-						emphasis: { focus: "series" },
-					},
-					{
-						type: "line",
-						smooth: true,
-						seriesLayoutBy: "row",
-						emphasis: { focus: "series" },
-					},
-					{
-						type: "line",
-						smooth: true,
-						seriesLayoutBy: "row",
-						emphasis: { focus: "series" },
-					},
-					{
-						type: "pie",
-						id: "pie",
-						radius: "30%",
-						center: ["50%", "30%"],
-						emphasis: { focus: "data" },
-						label: {
-							formatter: "{b}: {@2012} ({d}%)",
-						},
-						encode: {
-							itemName: "product",
-							value: "2017",
-							tooltip: "2017",
-						},
 					},
 				],
+				tooltip: {
+					show: true,
+					triggerOn: "click",
+					position: "top",
+					formatter: "{c}",
+				},
 			};
 		}
 
 		get recordList() {
+			console.log(this.$store.state);
 			return (this.$store.state as RootState).recordList;
 		}
 
 		get groupedList() {
 			const { recordList } = this;
-
 			const newList = clone(recordList)
 				.filter((r) => r.type === this.type)
-				.sort(
-					(a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
-				);
+				.sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+
 			if (newList.length === 0) {
 				return [];
 			}
@@ -233,12 +170,13 @@
 
 			result.map((group) => {
 				group.total = group.items.reduce((sum, item) => {
-					console.log(sum);
-					console.log(item);
 					return sum + item.amount;
 				}, 0);
 			});
 			return result;
+		}
+		beforeCreate() {
+			this.$store.commit("fetchRecords");
 		}
 
 		type = "-";
@@ -254,6 +192,7 @@
 	.noResult {
 		padding: 16px;
 		align-content: center;
+		color: rgba(255, 255, 255);
 	}
 	::v-deep {
 		.type-tabs-item {

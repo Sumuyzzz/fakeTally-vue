@@ -14,6 +14,6 @@
 		font-size: 16px;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		background: #313446;
+		background: rgba(49, 52, 70);
 	}
 </style>

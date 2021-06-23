@@ -5,7 +5,7 @@
 			<template v-if="type === 'date'" class="date">
 				<input
 					:type="type || 'text'"
-					:value="x(value)"
+					:value="date(value)"
 					@input="onValueChanged($event.target.value)"
 					:placeholder="this.placeholder"
 				/>
@@ -36,7 +36,7 @@
 		onValueChanged(value: string) {
 			this.$emit("update:value", value);
 		}
-		x(isoString: string) {
+		date(isoString: string) {
 			return dayjs(isoString).format("YYYY-MM-DD");
 		}
 	}
@@ -52,6 +52,9 @@
 			padding-right: 16px;
 		}
 		> .notes {
+			background: white;
+		}
+		> .date {
 			background: white;
 		}
 		input {
