@@ -1,25 +1,31 @@
 <template>
-	<div class="numberPad">
-		<div class="output">{{ output }}</div>
-		<div class="buttons">
-			<button @click="inputContent" class="button1">1</button>
-			<button @click="inputContent" class="button2">2</button>
-			<button @click="inputContent" class="button3">3</button>
+	<div class='numberPad'>
+		<div class='output'>{{ output }}</div>
+		<div class='buttons'>
+			<button @click='inputContent' class='button1'>1</button>
+			<button @click='inputContent' class='button2'>2</button>
+			<button @click='inputContent' class='button3'>3</button>
 
-			<button @click="inputContent" class="button4">4</button>
-			<button @click="inputContent" class="button5">5</button>
-			<button @click="inputContent" class="button6">6</button>
+			<button @click='inputContent' class='button4'>4</button>
+			<button @click='inputContent' class='button5'>5</button>
+			<button @click='inputContent' class='button6'>6</button>
 
-			<button @click="inputContent" class="button7">7</button>
-			<button @click="inputContent" class="button8">8</button>
-			<button @click="inputContent" class="button9">9</button>
+			<button @click='inputContent' class='button7'>7</button>
+			<button @click='inputContent' class='button8'>8</button>
+			<button @click='inputContent' class='button9'>9</button>
 
-			<button @click="inputContent" class="zero">0</button>
-			<button @click="inputContent" class="point">.</button>
+			<button @click='inputContent' class='zero'>0</button>
+			<button @click='inputContent' class='point'>.</button>
 
-			<button @click="remove" class="remove">退格</button>
-			<button @click="clear" class="clear">清空</button>
-			<button @click="ok" class="ok">完成</button>
+			<button @click='remove' class='remove'>
+				<Icon name='backspace' />
+			</button>
+			<button @click='clear' class='clear'>
+				<Icon name='clear' />
+			</button>
+			<button @click='ok' class='ok'>
+				<Icon name='ok' />
+			</button>
 		</div>
 	</div>
 </template>
@@ -70,7 +76,7 @@
 	}
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 	@import "~@/assets/styles/help.scss";
 
 	.numberPad {
@@ -83,15 +89,13 @@
 			color: #fff;
 		}
 		.buttons {
-			background: #fff;
+			background: #2e2f3a;
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
 			grid-template-rows: repeat(3, 1fr);
-			grid-column-gap: 16px;
-			grid-row-gap: 16px;
 			> button {
-				background: #13c791;
-				border-radius: 200px;
+				background: #313446;
+				border-style: none;
 				color: #fff;
 			}
 		}

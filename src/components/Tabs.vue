@@ -48,17 +48,21 @@
 <style scoped lang="scss">
 	.tabs {
 		display: flex;
-		color: rgb(255, 0, 0);
+
 		font-size: 24px;
 		text-align: center;
 		background: #ffffff;
 		&-item {
+			color: #ff7575;
 			height: 64px;
 			width: 50%;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			position: relative;
+			&.selected {
+				color: #13c791;
+			}
 			&.selected::after {
 				content: "";
 				position: absolute;

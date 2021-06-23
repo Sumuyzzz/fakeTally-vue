@@ -2,7 +2,7 @@
 	<div>
 		<label class="formItem">
 			<span class="name">{{ this.fieldName }}</span>
-			<template v-if="type === 'date'">
+			<template v-if="type === 'date'" class="date">
 				<input
 					:type="type || 'text'"
 					:value="x(value)"
@@ -10,7 +10,7 @@
 					:placeholder="this.placeholder"
 				/>
 			</template>
-			<template v-else>
+			<template v-else class="notes">
 				<input
 					:type="type || 'text'"
 					:value="value"
@@ -51,7 +51,11 @@
 		.name {
 			padding-right: 16px;
 		}
+		> .notes {
+			background: white;
+		}
 		input {
+			background: #fff;
 			height: 44px;
 			flex-grow: 1;
 			background: transparent;
