@@ -32,7 +32,6 @@
 
 		recordTypeList = recordTypeList;
 
-		//初始化数据
 		record: RecordItem = {
 			tags: [],
 			notes: "",

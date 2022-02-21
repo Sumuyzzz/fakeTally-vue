@@ -1,26 +1,30 @@
 <template>
 	<Layout>
-		<div class='chartWrapper' ref='chartWrapper'>
-			<Chart :options='echartsType' class='echarts' />
+		<div class="chartWrapper" ref="chartWrapper">
+			<Chart :options="echartsType" class="echarts" />
 		</div>
 
-		<Tabs class-prefix='type' :data-source='recordTypeList' :value.sync='type' />
-		<ol v-if='groupedList.length > 0'>
-			<li v-for='(group, index) in groupedList' :key='index'>
-				<h3 class='title'>
+		<Tabs
+			class-prefix="type"
+			:data-source="recordTypeList"
+			:value.sync="type"
+		/>
+		<ol v-if="groupedList.length > 0">
+			<li v-for="(group, index) in groupedList" :key="index">
+				<h3 class="title">
 					{{ beautify(group.title) }}
 					<span>￥{{ group.total }}</span>
 				</h3>
 				<ol>
-					<li v-for='item in group.items' :key='item.id' class='record'>
-						<span>{{ tagString(item.tags) }}</span>
-						<span class='notes'>{{ item.notes }}</span>
-						<span>￥{{ item.amount }}</span>
+					<li v-for="item in group.items" :key="item.id" class="record">
+						<span class="tags">{{ tagString(item.tags) }}</span>
+						<span class="notes">{{ item.notes }}</span>
+						<span class="amount">￥{{ item.amount }}</span>
 					</li>
 				</ol>
 			</li>
 		</ol>
-		<div v-else class='noResult'>目前没有相关记录{{groupedList.length}}</div>
+		<div v-else class="noResult">目前没有相关记录{{ groupedList.length }}</div>
 	</Layout>
 </template>
 <script lang="ts">
@@ -67,7 +71,7 @@
 			const today = new Date();
 			const array = [];
 			console.log(this.groupedList);
-			for (let i = 0; i <= 29; i++) {
+			for (let i = 0;i <= 29;i++) {
 				const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
 				const found = _.find(this.groupedList, {
 					title: dateString,
@@ -120,7 +124,6 @@
 						symbol: "circle",
 						symbolSize: 12,
 						itemStyle: { borderWidth: 1, color: "#666", borderColor: "#666" },
-						// lineStyle: {width: 10},
 						data: values,
 						type: "line",
 					},
@@ -155,7 +158,7 @@
 					items: [newList[0]],
 				},
 			];
-			for (let i = 1; i < newList.length; i++) {
+			for (let i = 1;i < newList.length;i++) {
 				const current = newList[i];
 				const last = result[result.length - 1];
 				if (dayjs(last.title).isSame(dayjs(current.createdAt), "day")) {
@@ -213,7 +216,7 @@
 		line-height: 24px;
 		display: flex;
 		justify-content: space-between;
-		align-content: center;
+		align-items: center;
 	}
 	.title {
 		@extend %item;
@@ -221,10 +224,11 @@
 	.record {
 		background: white;
 		@extend %item;
-	}
-	.notes {
-		margin-right: auto;
-		margin-left: 16px;
-		color: #999;
+
+		.notes {
+			margin-right: auto;
+			margin-left: 16px;
+			color: #999;
+		}
 	}
 </style>
