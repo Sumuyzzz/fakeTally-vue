@@ -1,7 +1,7 @@
 <template>
 	<Layout>
 		<div class="navBar">
-			<Icon class="leftIcon" name="left" @click="goback" />
+			<Icon class="leftIcon" name="left" @click="goBack" />
 			<span class="title">编辑标签</span>
 			<span class="rightIcon" />
 		</div>
@@ -16,6 +16,7 @@
 		</div>
 		<div class="button-wrapper">
 			<Button @click="removeTag">删除标签</Button>
+			<Button @click="goBack">确认提交</Button>
 		</div>
 	</Layout>
 </template>
@@ -60,7 +61,7 @@
 				window.alert("删除成功");
 			}
 		}
-		goback() {
+		goBack() {
 			this.$router.back();
 		}
 	}
@@ -91,7 +92,9 @@
 		margin-top: 8px;
 	}
 	.button-wrapper {
+		display: flex;
 		text-align: center;
+		justify-content: space-around;
 		padding: 16px;
 		margin-top: 44px;
 	}
