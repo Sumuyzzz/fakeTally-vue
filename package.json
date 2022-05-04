@@ -7,10 +7,11 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:dev":"cross-env NODE_ENV=development yarn build"
+    "build:dev": "cross-env NODE_ENV=development yarn build"
   },
   "dependencies": {
     "@types/echarts": "^4.9.7",
+    "caniuse-lite": "^1.0.30001335",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.4",
