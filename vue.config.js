@@ -24,5 +24,5 @@ module.exports = {
     ]);
     config.module.rule('svg').exclude.add(dir);
   },
-  // publicPath: process.env.NODE_ENV === 'production' ? '/money_manage/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/fakeTally-vue/' : '/',
 };
