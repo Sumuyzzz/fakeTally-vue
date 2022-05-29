@@ -3,20 +3,22 @@
 		<div class="chartWrapper" ref="chartWrapper">
 			<Chart :options="echartsType" class="echarts" />
 		</div>
-
+	
 		<Tabs
 			class-prefix="type"
 			:data-source="recordTypeList"
 			:value.sync="type"
 		/>
 		<ol v-if="groupedList.length > 0">
+		
 			<li v-for="(group, index) in groupedList" :key="index">
-				<h3 class="title">
+			<h3 class="title">
 					{{ beautify(group.title) }}
 					<span>￥{{ group.total }}</span>
 				</h3>
 				<ol>
-					<li v-for="item in group.items" :key="item.id" class="record">
+
+					<li v-for="item in group.items" :key="item.createdAt" class="record">
 						<span class="tags">{{ tagString(item.tags) }}</span>
 						<span class="notes">{{ item.notes }}</span>
 						<span class="amount">￥{{ item.amount }}</span>
@@ -70,7 +72,6 @@
 		get keyValueList() {
 			const today = new Date();
 			const array = [];
-			console.log(this.groupedList);
 			for (let i = 0;i <= 29;i++) {
 				const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
 				const found = _.find(this.groupedList, {
@@ -90,8 +91,6 @@
 					return -1;
 				}
 			});
-			console.log("array");
-			console.log(array);
 			return array;
 		}
 
@@ -138,12 +137,12 @@
 		}
 
 		get recordList() {
-			console.log(this.$store.state);
 			return (this.$store.state as RootState).recordList;
 		}
 
 		get groupedList() {
 			const { recordList } = this;
+			console.log(recordList);
 			const newList = clone(recordList)
 				.filter((r) => r.type === this.type)
 				.sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
@@ -220,6 +219,7 @@
 	}
 	.title {
 		@extend %item;
+		color:#fff;
 	}
 	.record {
 		background: white;
